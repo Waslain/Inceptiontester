@@ -38,3 +38,93 @@ void gCheckEntryPointScripts() {
 void gCheckInfiniteLoop() {
 	doCommand("find srcs -name '*.sh' -exec grep -E 'sleep infinity|tail -f /dev/null|tail -f /dev/random' {} +");
 }
+
+void mNginxPort443()
+{
+	std::string loginurl =  login + ".42.fr";
+	doCommand("nc -zv " + loginurl + " 1-65535");
+	std::string url = "https://" + loginurl;
+	openBrowser(url + ":443");
+	openBrowser(url + ":80");
+}
+
+void mCheckSSLandTLS()
+{
+	doCommand("cat srcs/requirements/nginx/conf/nginx.conf | grep -Ei 'ssl|tls'");
+}
+
+void mOpenLogin42()
+{
+	std::string url = "https://login.42.fr";
+	openBrowser(url);
+}
+
+void mCheckDockerfile()
+{
+	doCommand("find srcs -name 'Dockerfile' -ls | awk '{print $7, $8, $9, $10, $11}'");
+}
+
+void mCheckKernel()
+{
+	doCommand("find srcs -name 'Dockerfile' -exec grep FROM {} +");
+}
+
+void mCheckImageName()
+{
+	doCommand("grep image srcs/docker-compose.yml");
+}
+
+void mCheckMakefile()
+{
+	doCommand("cat Makefile");
+}
+
+void mCheckDockerNetwork()
+{
+	doCommand("grep network docker-compose.yml -A1");
+	doCommand("docker network ls");
+}
+
+void mDockerComposePs()
+{
+	doCommand("docker compose ps");
+}
+
+void mNginxNotPort80()
+{
+	std::string loginurl =  login + ".42.fr";
+	std::string url = "https://" + loginurl;
+	openBrowser(url + ":80");
+}
+
+void mCheckNoNginxInWP()
+{
+	doCommand("grep nginx srcs/requirements/wordpress/Dockerfile");
+}
+
+void mDockerVolumeLS()
+{
+	doCommand("docker volume ls");
+}
+
+void mCheckOutputPathWP()
+{
+	doCommand("docker volume inspect srcs_wordpress | grep home");
+}
+
+void mOpenLoginPage()
+{
+	std::string loginurl =  login + ".42.fr";
+	std::string url = "https://" + loginurl + "/wp-login.php";
+	openBrowser(url);
+}
+
+void mCheckNoNginxInMariaDB()
+{
+	doCommand("grep nginx srcs/requirements/mariadb/Dockerfile");
+}
+
+void mCheckOutputPathMariaDB()
+{
+	doCommand("docker volume inspect srcs_mariadb | grep home");
+}
