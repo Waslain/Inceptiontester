@@ -16,6 +16,7 @@
 extern std::string login;
 
 std::vector<std::string> readFileLines(const std::string& filePath);
+std::string execNoColor(const char* cmd);
 std::string exec(const char* cmd);
 void openBrowser(const std::string& url);
 void waitForKeyPress();
@@ -44,6 +45,7 @@ void mCheckMakefile();
 void mCheckDockerNetwork();
 void mDockerComposePs();
 void mNginxNotPort80();
+void mOpenWebPage();
 void mCheckNoNginxInWP();
 void mDockerVolumeLS();
 void mCheckOutputPathWP();

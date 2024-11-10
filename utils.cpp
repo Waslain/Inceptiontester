@@ -36,6 +36,19 @@ std::string addColorWhenNeeded(const char *cmd)
 	return command;
 }
 
+std::string execNoColor(const char* cmd) {
+	std::array<char, 128> buffer;
+	std::string result;
+	std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+	if (!pipe) {
+		throw std::runtime_error("popen() failed!");
+	}
+	while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+		result += buffer.data();
+	}
+	return result;
+}
+
 std::string exec(const char* cmd) {
 	std::array<char, 128> buffer;
 	std::string result;
@@ -89,7 +102,7 @@ void printMenuMandatory()
 	std::cout << "	18) Do 'docker compose ps'" << std::endl;
 	std::cout << "	19) Check output path" << std::endl;
 	std::cout << "	20) Connect to MariaDB, 'docker exec -it mariadb mariadb --user ? -p?'" << std::endl;
-	std::cout << std::endl << "21) Exit" << std::endl;
+	std::cout << std::endl << "	21) Exit" << std::endl;
 }
 
 void printMenuGeneral()

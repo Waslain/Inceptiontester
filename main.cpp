@@ -14,7 +14,7 @@ void Mandatory() {
 		{"8", mCheckDockerNetwork},
 		{"9", mDockerComposePs},
 		{"10", mNginxNotPort80},
-		{"11", mOpenLogin42	},
+		{"11", mOpenWebPage},
 		{"12", mCheckNoNginxInWP},
 		{"13", mDockerComposePs},
 		{"14", mDockerVolumeLS},

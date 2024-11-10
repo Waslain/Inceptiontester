@@ -8,12 +8,20 @@ void doCommand(const std::string& command) {
 	waitForKeyPress();
 }
 
+void doCommandNoColor(const std::string& command) {
+	system("clear");
+	std::cout << "Command: " << command << std::endl << std::endl;
+	std::string output = execNoColor(command.c_str());
+	std::cout << output << std::endl;
+	waitForKeyPress();
+}
+
 void gLsFilesInRootFolder() {
 	doCommand("ls -C");
 }
 
 void gStopDocker() {
-	doCommand("docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q) 2>/dev/null");
+	doCommandNoColor("docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q) 2>/dev/null");
 }
 
 void gCheckNetworksOrLinks() {
@@ -81,13 +89,13 @@ void mCheckMakefile()
 
 void mCheckDockerNetwork()
 {
-	doCommand("grep network docker-compose.yml -A1");
+	doCommand("grep network srcs/docker-compose.yml -A1");
 	doCommand("docker network ls");
 }
 
 void mDockerComposePs()
 {
-	doCommand("docker compose ps");
+	doCommand("docker compose -f srcs/docker-compose.yml ps");
 }
 
 void mNginxNotPort80()
@@ -95,6 +103,12 @@ void mNginxNotPort80()
 	std::string loginurl =  login + ".42.fr";
 	std::string url = "https://" + loginurl;
 	openBrowser(url + ":80");
+}
+
+void mOpenWebPage()
+{
+	std::string url = "https://" + login + ".42.fr";
+	openBrowser(url);
 }
 
 void mCheckNoNginxInWP()
